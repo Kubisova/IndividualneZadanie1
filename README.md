@@ -7,7 +7,7 @@ Program predpokladá, že má práva na prácu  s týmto súborom.
 Ak nastane chyba pri práci so súborom, chyba sa zapíše do súboru errorLog.txt
 
 Autobazar.cs - hlavná trieda (statická)
-AutobazarException - custom exception
+VehicleNotFoundException - custom exception
 AutobazarMenu - menu
 Vehicle - trieda s properties pre auto
 Helpers\InputValidator - získanie a validácia vstupov
