@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutobazarApp.Helpers
 {
-    public static class Common
+    public static class ConsoleWriter
     {
         public static void ConsoleHorizontalLine(char c = '=')
         {

@@ -6,10 +6,10 @@ namespace AutobazarApp
     {
         static void Main(string[] args)
         {
-            Autobazar bazar = new Autobazar();
+            
             try
             {
-                bazar.LoadVehicles();
+                Autobazar.LoadVehicles();
             }
             catch
             {
@@ -19,7 +19,7 @@ namespace AutobazarApp
                 return;
             }
 
-            AutobazarMenu.Run(bazar);          
+            AutobazarMenu.Run();          
         }
     }
 }

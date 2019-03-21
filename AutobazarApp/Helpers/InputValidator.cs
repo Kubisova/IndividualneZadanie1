@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutobazarApp
+namespace AutobazarApp.Helpers
 {
     static class InputValidator
     {
@@ -15,7 +15,7 @@ namespace AutobazarApp
             int validInput;
             do
             {
-                Common.ConsoleHorizontalLine('-');
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine(message);
                 isValid = int.TryParse(Console.ReadLine(), out validInput);
                 if (isValid == false || validInput <= 0)
@@ -34,7 +34,7 @@ namespace AutobazarApp
             int validInput;
             do
             {
-                Common.ConsoleHorizontalLine('-');
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine(message);
                 isValid = int.TryParse(Console.ReadLine(), out validInput);
                 if (isValid == false || (validInput < min || validInput > max))
@@ -52,7 +52,7 @@ namespace AutobazarApp
             string input;
             do
             {
-                Common.ConsoleHorizontalLine('-');
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine(message);
                 input = Console.ReadLine();
                 if (input == string.Empty)
@@ -70,7 +70,7 @@ namespace AutobazarApp
             bool isYes = false;
             do
             {
-                Common.ConsoleHorizontalLine('-');
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine(message);
                 string crashed = Console.ReadLine().ToLower();
                 if (crashed == "yes"||crashed =="y")
@@ -100,7 +100,7 @@ namespace AutobazarApp
             decimal price;
             do
             {
-                Common.ConsoleHorizontalLine('-');
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine(message);
                 isValid = decimal.TryParse(Console.ReadLine(), out price);
                 if (isValid == false || price <= 0)
@@ -119,12 +119,11 @@ namespace AutobazarApp
             int fuelType;
             do
             {
-                Common.ConsoleHorizontalLine('-');
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine("Choose the type of fuel");
                 Console.WriteLine("0 - Petrol");
                 Console.WriteLine("1 - Diesel");
                 Console.WriteLine("2 - Gas");
-                Common.ConsoleHorizontalLine('-');
 
                 isValid = int.TryParse(Console.ReadLine(), out fuelType);
                 if (isValid == false || fuelType < 0 || fuelType > 2)
@@ -136,7 +135,5 @@ namespace AutobazarApp
 
             return (Fuel)fuelType;
         }
-
-
     }
 }

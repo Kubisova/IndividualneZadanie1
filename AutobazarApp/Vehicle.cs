@@ -28,7 +28,7 @@ namespace AutobazarApp
 
         public override string ToString()
         {
-            return $"{Id}\t{YearOfProduction}\t{NumberOfKm}\t{VehicleBrand}\t{VehicleType}\t{VehicleFuel}\t{Price}\t{City}\t{NumberOfKm}\t{IsCrashed}";
+            return $"{Id}\t{YearOfProduction}\t{NumberOfKm}\t{VehicleBrand}\t{VehicleType}\t{VehicleFuel}\t{Price}\t{City}\t{NumberOfDoors}\t{IsCrashed}";
         }
     }
 }

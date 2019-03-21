@@ -9,13 +9,13 @@ namespace AutobazarApp
 {
     static class AutobazarMenu
     {
-        public static void Run(Autobazar autobazar)
+        public static void Run()
         {
-            string action = "0";
+            string action;
 
             do
             {
-                Common.ConsoleHorizontalLine();
+                ConsoleWriter.ConsoleHorizontalLine();
                 Console.WriteLine("AUTOBAZAR MENU");
                 Console.WriteLine("A - Add vehicle");
                 Console.WriteLine("E - Edit vehicle");
@@ -23,7 +23,7 @@ namespace AutobazarApp
                 Console.WriteLine("L - Load vehicles");
                 Console.WriteLine("S - Save vehicles");
                 Console.WriteLine("Q - Quit");
-                Common.ConsoleHorizontalLine();
+                ConsoleWriter.ConsoleHorizontalLine();
 
                 action = Console.ReadLine().ToUpper();
 
@@ -31,29 +31,77 @@ namespace AutobazarApp
                 {                    
                     case "A":
                         {
-                            Add(autobazar);
+                            try
+                            {
+                                Add();
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Error! Something went wrong with adding vehicle.");
+                                Console.WriteLine("Application will be closed. Press any key.");
+                                Console.ReadKey();
+                                return;
+                            }
                             break;
                         }
                     case "E":
                         {
-                            Edit(autobazar);
+                            try
+                            {
+                                Edit();
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Error! Something went wrong with editing vehicle.");
+                                Console.WriteLine("Application will be closed. Press any key.");
+                                Console.ReadKey();
+                                return;
+                            }
                             break;
                         }
                     case "D":
                         {
-                            Delete(autobazar);
+                            try
+                            {
+                                Delete();
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Error! Something went wrong with deleting vehicle.");
+                                Console.WriteLine("Application will be closed. Press any key.");
+                                Console.ReadKey();
+                                return;
+                            }
                             break;
                         }
                     case "L":
                         {
-                            Load(autobazar);
-                            
+                            try
+                            {
+                                Load();
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Error! Something went wrong with loading vehicles.");
+                                Console.WriteLine("Application will be closed. Press any key.");
+                                Console.ReadKey();
+                                return;
+                            }
                             break;
                         }
                     case "S":
                         {
-                            Save(autobazar);
-                            
+                            try
+                            {
+                                Save();
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Error! Something went wrong with saving vehicle.");
+                                Console.WriteLine("Application will be closed. Press any key.");
+                                Console.ReadKey();
+                                return;
+                            }
                             break;
                         }
                     case "Q":
@@ -70,9 +118,9 @@ namespace AutobazarApp
             } while (action != "Q");
         }
 
-        private static void Add(Autobazar autobazar)
+        private static void Add()
         {
-            Vehicle vehicle = new Vehicle(autobazar.GetNextId());
+            Vehicle vehicle = new Vehicle(Autobazar.GetNextId());
 
             vehicle.YearOfProduction = InputValidator.GetPositiveNumber("Enter year of production");
             vehicle.NumberOfKm = InputValidator.GetPositiveNumber("Enter number of km");
@@ -86,28 +134,23 @@ namespace AutobazarApp
             
             try
             {
-                autobazar.AddVehicle(vehicle);
+                Autobazar.AddVehicle(vehicle);
             }
             catch
             {
-                
-                Console.WriteLine("Error! Something went wrong with adding vehicle. Application will be closed. Press any key.");
-                Console.ReadKey();
-                return;
+                throw;
             }
 
-            // TODO: nepouzivat cisla, prepisat vsetky cisla
-            Console.WriteLine(new string('-', 79));
+            ConsoleWriter.ConsoleHorizontalLine('-');
             Console.WriteLine("Vehicle was added.");
-
         }
 
-        private static void Edit(Autobazar autobazar)
+        private static void Edit()
         {
-            WriteVehiclesToScreen(autobazar);
+            WriteVehiclesToScreen();
 
             int vehicleId = InputValidator.GetPositiveNumber("Enter number of vehicle to edit");
-            Vehicle vehicle = autobazar.GetVehicleById(vehicleId);
+            Vehicle vehicle = Autobazar.GetVehicleById(vehicleId);
             if (vehicle == null)
             {
                 Console.WriteLine("Vehicle not found");
@@ -125,7 +168,7 @@ namespace AutobazarApp
                     bool isError = false;
                     try
                     {
-                        autobazar.EditVehicle(vehicle);
+                        Autobazar.EditVehicle(vehicle);
                     }
                     catch (AutobazarException)
                     {
@@ -134,14 +177,12 @@ namespace AutobazarApp
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("Error! Something went wrong with editing vehicle. Application will be closed. Press any key.");
-                        Console.ReadKey();
-                        return;
+                        throw;
                     }
 
                     if (isError == false)
                     {
-                        Console.WriteLine(new string('-', 79));
+                        ConsoleWriter.ConsoleHorizontalLine('-');
                         Console.WriteLine("Vehicle was edited.");
                     }
 
@@ -150,15 +191,15 @@ namespace AutobazarApp
             }
         }
 
-        private static void Delete(Autobazar autobazar)
+        private static void Delete()
         {
-            WriteVehiclesToScreen(autobazar);
+            WriteVehiclesToScreen();
             int vehicleId = InputValidator.GetPositiveNumber("Enter number of vehicle to delete");
 
             bool isError = false;
             try
             {
-                autobazar.DeleteVehicle(vehicleId);
+                Autobazar.DeleteVehicle(vehicleId);
             }
             catch (AutobazarException)
             {
@@ -167,80 +208,65 @@ namespace AutobazarApp
             }
             catch (Exception)
             {
-                isError = true;
-                Console.WriteLine("Error! Something went wrong with deleting vehicle. Application will be closed. Press any key.");
-                Console.ReadKey();
-                return;
+                throw;
             }
 
             if (isError == false)
             {
-                Console.WriteLine(new string('-', 79));
+                ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine("Vehicle was deleted.");
             }
         }
 
-        private static void Load(Autobazar autobazar)
+        private static void Load()
         {
-            bool isError = false;
             try
             {
-                autobazar.LoadVehicles();
+                Autobazar.LoadVehicles();
             }
             catch (Exception)
             {
-                isError = true;
-                Console.WriteLine("Error! Something went wrong with loading vehicles. Application will be closed. Press any key.");
-                Console.ReadKey();
-                return;
+                throw;
             }
 
-            if (isError == false)
+            if (Autobazar.GetVehicleCount() == 0)
             {
-                if (autobazar.GetVehicleCount() == 0)
-                {
-                    Console.WriteLine("There are no vehicles in autobazar.");
-                }
-                else
-                {
-                    WriteVehiclesToScreen(autobazar);
-                }
+                Console.WriteLine("There are no vehicles in autobazar.");
+            }
+            else
+            {
+                WriteVehiclesToScreen();
             }
         }
 
-        private static void Save(Autobazar autobazar)
+        private static void Save()
         {
-            if (autobazar.GetVehicleCount() == 0)
+            if (Autobazar.GetVehicleCount() == 0)
             {
                 Console.WriteLine("There are no vehicles to save");
             }
             else
             {
-                bool isError = false;
                 try
                 {
-                    autobazar.SaveVehicles();
+                    Autobazar.SaveVehicles();
                 }
                 catch (Exception)
                 {
-                    isError = true;
-                    Console.WriteLine("Error! Something went wrong with saving vehicle. Application will be closed. Press any key.");
-                    Console.ReadKey();
-                    return;
+                    throw;
                 }
-                if (isError == false)
-                {
-                    Console.WriteLine(new string('-', 79));
-                    Console.WriteLine("Vehicles were saved.");
-                }
+
+                ConsoleWriter.ConsoleHorizontalLine('-');
+                Console.WriteLine("Vehicles were saved.");
             }
         }
 
-
-        private static void WriteVehiclesToScreen(Autobazar autobazar)
+        private static void WriteVehiclesToScreen()
         {
-            Common.ConsoleHorizontalLine();
-            List<string> vehicles = autobazar.ShowVehicles();
+            ConsoleWriter.ConsoleHorizontalLine('-');
+            Console.WriteLine("YOUR VEHICLES:");
+            ConsoleWriter.ConsoleHorizontalLine('-');
+            List<string> vehicles = Autobazar.ShowVehicles();
             foreach (var vehicle in vehicles)
             {
                 Console.WriteLine(vehicle);
@@ -249,7 +275,7 @@ namespace AutobazarApp
 
         private static void WriteMenuForEditToScreen()
         {
-            Console.WriteLine(new string('=', 79));
+            ConsoleWriter.ConsoleHorizontalLine('-');
             Console.WriteLine("EDIT MENU");
             Console.WriteLine("1 - Year of production");
             Console.WriteLine("2 - Number of km");

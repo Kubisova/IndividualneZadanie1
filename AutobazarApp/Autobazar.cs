@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace AutobazarApp
 {
-    public class Autobazar
+    static class Autobazar
     {
-        private List<Vehicle> vehicles;
-        string dataPath = "Autobazar.txt";
+        private static List<Vehicle> _vehicles;
+        private static string _dataPath = "Autobazar.txt";
 
-        public Autobazar()
+        static Autobazar()
         {
-            vehicles = new List<Vehicle>();
+            _vehicles = new List<Vehicle>();
         }
 
-        public void AddVehicle(Vehicle vehicle)
+        public static void AddVehicle(Vehicle vehicle)
         {
-            vehicles.Add(vehicle);
+            _vehicles.Add(vehicle);
             SaveLastVehicle();            
         }
 
-        public void EditVehicle(Vehicle changedVehicle)
+        public static void EditVehicle(Vehicle changedVehicle)
         {
             int index = 0;
             bool isFound = false;
-            foreach (var vehicle in vehicles)
+            foreach (var vehicle in _vehicles)
             {
                 if (vehicle.Id == changedVehicle.Id)
                 {
-                    index = vehicles.IndexOf(vehicle);
+                    index = _vehicles.IndexOf(vehicle);
                     isFound = true;
                     break;
                 }
             }
             if (isFound)
             {
-                vehicles[index] = changedVehicle;
+                _vehicles[index] = changedVehicle;
                 SaveVehicles();
             }
             else
@@ -49,12 +49,12 @@ namespace AutobazarApp
             
         }
 
-        public void DeleteVehicle(int id)
+        public static void DeleteVehicle(int id)
         {
             Vehicle vehicle = GetVehicleById(id);
             if (vehicle != null)
             {
-                vehicles.Remove(vehicle);
+                _vehicles.Remove(vehicle);
             }
             else
             {
@@ -64,18 +64,18 @@ namespace AutobazarApp
             SaveVehicles();
         }
 
-        public void LoadVehicles()
+        public static void LoadVehicles()
         {
-            if (File.Exists(dataPath))
+            if (File.Exists(_dataPath))
             {
                 try
                 {
-                    string[] vehiclesFromFile = File.ReadAllLines(dataPath);
+                    string[] vehiclesFromFile = File.ReadAllLines(_dataPath);
 
                     if (vehiclesFromFile.Count() > 0)
 
                     {
-                        vehicles.Clear();
+                        _vehicles.Clear();
                         foreach (var vehicleFromFile in vehiclesFromFile)
                         {
                             string[] propertiesOfVehicle = vehicleFromFile.Split('\t');
@@ -101,7 +101,7 @@ namespace AutobazarApp
                             vehicle.City = propertiesOfVehicle[7];
                             vehicle.NumberOfDoors = int.Parse(propertiesOfVehicle[8]);
                             vehicle.IsCrashed = bool.Parse(propertiesOfVehicle[9]);
-                            vehicles.Add(vehicle);
+                            _vehicles.Add(vehicle);
                         }
                     }
                 }
@@ -113,13 +113,13 @@ namespace AutobazarApp
             }
         }
 
-        public void SaveLastVehicle()
+        public static void SaveLastVehicle()
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(dataPath, true))
+                using (StreamWriter sw = new StreamWriter(_dataPath, true))
                 {
-                    sw.WriteLine(vehicles.Last().ToString());
+                    sw.WriteLine(_vehicles.Last().ToString());
                 }
             }
             catch (Exception ex)
@@ -128,13 +128,13 @@ namespace AutobazarApp
                 throw;
             }
         }
-        public void SaveVehicles() 
+        public static void SaveVehicles() 
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(dataPath))
+                using (StreamWriter sw = new StreamWriter(_dataPath))
                 {
-                    foreach (var vehicle in vehicles)
+                    foreach (var vehicle in _vehicles)
                     {
                         sw.WriteLine(vehicle.ToString());
                     }
@@ -147,34 +147,34 @@ namespace AutobazarApp
             }
         }
 
-        public int GetNextId()
+        public static int GetNextId()
         {
-            if (vehicles.Count() == 0)
+            if (_vehicles.Count() == 0)
             {
                 return 1;
             }
             else
             {
-                return vehicles.Last().Id + 1;
+                return _vehicles.Last().Id + 1;
             }
         }
 
-        public List<string> ShowVehicles()
+        public static List<string> ShowVehicles()
         {
             List<string> showVehicles = new List<string>();
-            foreach (var vehicle in vehicles)
+            foreach (var vehicle in _vehicles)
             {
                 showVehicles.Add($"{vehicle.Id} - {vehicle.VehicleBrand} {vehicle.VehicleType}, year of production: {vehicle.YearOfProduction}, number of km: {vehicle.NumberOfKm},\n price: {vehicle.Price}, number of doors: {vehicle.NumberOfDoors}, fuel: {vehicle.VehicleFuel}, crashed: {vehicle.IsCrashed}, city: {vehicle.City}");
-                showVehicles.Add(new string ('-', 79 ));
+                showVehicles.Add(new string('-', Console.WindowWidth - 1));
             }
 
             return showVehicles;
         }
 
-        public Vehicle GetVehicleById(int id)
+        public static Vehicle GetVehicleById(int id)
         {
             Vehicle vehicleById = null;
-            foreach (var vehicle in vehicles)
+            foreach (var vehicle in _vehicles)
             {
                 if (vehicle.Id == id)
                 {
@@ -186,9 +186,9 @@ namespace AutobazarApp
             return vehicleById;
         }
 
-        public int GetVehicleCount()
+        public static int GetVehicleCount()
         {
-            return vehicles.Count;
+            return _vehicles.Count;
         }
     }
 }
