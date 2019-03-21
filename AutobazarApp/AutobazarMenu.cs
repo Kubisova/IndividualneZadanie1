@@ -52,30 +52,8 @@ namespace AutobazarApp
                         }
                     case "S":
                         {
-                            if (autobazar.GetVehicleCount() == 0)
-                            {
-                                Console.WriteLine("There are no vehicles to save");
-                            }
-                            else
-                            {
-                                bool isError = false;
-                                try
-                                {
-                                    autobazar.SaveVehicles();
-                                }
-                                catch (Exception)
-                                {
-                                    isError = true;
-                                    Console.WriteLine("Error! Something went wrong with saving vehicle. Application will be closed. Press any key.");
-                                    Console.ReadKey();
-                                    return;
-                                }
-                                if (isError == false)
-                                {
-                                    Console.WriteLine(new string('-', 79));
-                                    Console.WriteLine("Vehicles were saved.");
-                                }
-                            }
+                            Save(autobazar);
+                            
                             break;
                         }
                     case "Q":
@@ -229,6 +207,35 @@ namespace AutobazarApp
                 }
             }
         }
+
+        private static void Save(Autobazar autobazar)
+        {
+            if (autobazar.GetVehicleCount() == 0)
+            {
+                Console.WriteLine("There are no vehicles to save");
+            }
+            else
+            {
+                bool isError = false;
+                try
+                {
+                    autobazar.SaveVehicles();
+                }
+                catch (Exception)
+                {
+                    isError = true;
+                    Console.WriteLine("Error! Something went wrong with saving vehicle. Application will be closed. Press any key.");
+                    Console.ReadKey();
+                    return;
+                }
+                if (isError == false)
+                {
+                    Console.WriteLine(new string('-', 79));
+                    Console.WriteLine("Vehicles were saved.");
+                }
+            }
+        }
+
 
         private static void WriteVehiclesToScreen(Autobazar autobazar)
         {
