@@ -10,13 +10,8 @@ namespace AutobazarApp
 {
     static class Autobazar
     {
-        private static List<Vehicle> _vehicles;
+        private static List<Vehicle> _vehicles = new List<Vehicle>();
         private static string _dataPath = "Autobazar.txt";
-
-        static Autobazar()
-        {
-            _vehicles = new List<Vehicle>();
-        }
 
         public static void AddVehicle(Vehicle vehicle)
         {
@@ -44,9 +39,8 @@ namespace AutobazarApp
             }
             else
             {
-                throw new AutobazarException("Vehicle not found");
+                throw new VehicleNotFoundException("Vehicle not found");
             }
-            
         }
 
         public static void DeleteVehicle(int id)
@@ -58,7 +52,7 @@ namespace AutobazarApp
             }
             else
             {
-                throw new AutobazarException("Vehicle not found!");
+                throw new VehicleNotFoundException("Vehicle not found!");
             }
 
             SaveVehicles();

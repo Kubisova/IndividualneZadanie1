@@ -35,7 +35,7 @@ namespace AutobazarApp
                             {
                                 Add();
                             }
-                            catch (Exception)
+                            catch 
                             {
                                 Console.WriteLine("Error! Something went wrong with adding vehicle.");
                                 Console.WriteLine("Application will be closed. Press any key.");
@@ -50,7 +50,7 @@ namespace AutobazarApp
                             {
                                 Edit();
                             }
-                            catch (Exception)
+                            catch 
                             {
                                 Console.WriteLine("Error! Something went wrong with editing vehicle.");
                                 Console.WriteLine("Application will be closed. Press any key.");
@@ -65,7 +65,7 @@ namespace AutobazarApp
                             {
                                 Delete();
                             }
-                            catch (Exception)
+                            catch 
                             {
                                 Console.WriteLine("Error! Something went wrong with deleting vehicle.");
                                 Console.WriteLine("Application will be closed. Press any key.");
@@ -80,7 +80,7 @@ namespace AutobazarApp
                             {
                                 Load();
                             }
-                            catch (Exception)
+                            catch 
                             {
                                 Console.WriteLine("Error! Something went wrong with loading vehicles.");
                                 Console.WriteLine("Application will be closed. Press any key.");
@@ -95,9 +95,9 @@ namespace AutobazarApp
                             {
                                 Save();
                             }
-                            catch (Exception)
+                            catch 
                             {
-                                Console.WriteLine("Error! Something went wrong with saving vehicle.");
+                                Console.WriteLine("Error! Something went wrong with saving vehicles.");
                                 Console.WriteLine("Application will be closed. Press any key.");
                                 Console.ReadKey();
                                 return;
@@ -132,14 +132,7 @@ namespace AutobazarApp
             vehicle.NumberOfDoors = InputValidator.GetPositiveNumber("Enter number of doors");
             vehicle.IsCrashed = InputValidator.GetBoolen("Enter if vehicle was crashed - Yes/No");
             
-            try
-            {
-                Autobazar.AddVehicle(vehicle);
-            }
-            catch
-            {
-                throw;
-            }
+            Autobazar.AddVehicle(vehicle);
 
             ConsoleWriter.ConsoleHorizontalLine('-');
             Console.WriteLine("Vehicle was added.");
@@ -170,14 +163,10 @@ namespace AutobazarApp
                     {
                         Autobazar.EditVehicle(vehicle);
                     }
-                    catch (AutobazarException)
+                    catch (VehicleNotFoundException)
                     {
                         isError = true;
                         Console.WriteLine("Vehicle not found");
-                    }
-                    catch (Exception)
-                    {
-                        throw;
                     }
 
                     if (isError == false)
@@ -201,14 +190,10 @@ namespace AutobazarApp
             {
                 Autobazar.DeleteVehicle(vehicleId);
             }
-            catch (AutobazarException)
+            catch (VehicleNotFoundException)
             {
                 isError = true;
                 Console.WriteLine("Vehicle not found");
-            }
-            catch (Exception)
-            {
-                throw;
             }
 
             if (isError == false)
@@ -220,15 +205,8 @@ namespace AutobazarApp
 
         private static void Load()
         {
-            try
-            {
-                Autobazar.LoadVehicles();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
+            Autobazar.LoadVehicles();
+            
             if (Autobazar.GetVehicleCount() == 0)
             {
                 Console.WriteLine("There are no vehicles in autobazar.");
@@ -247,14 +225,7 @@ namespace AutobazarApp
             }
             else
             {
-                try
-                {
-                    Autobazar.SaveVehicles();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                Autobazar.SaveVehicles();
 
                 ConsoleWriter.ConsoleHorizontalLine('-');
                 Console.WriteLine("Vehicles were saved.");

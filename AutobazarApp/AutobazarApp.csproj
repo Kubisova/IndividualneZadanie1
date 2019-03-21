@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autobazar.cs" />
-    <Compile Include="AutobazarException.cs" />
+    <Compile Include="VehicleNotFoundException.cs" />
     <Compile Include="AutobazarMenu.cs" />
     <Compile Include="Helpers\ConsoleWriter.cs" />
     <Compile Include="Helpers\ErrorLogger.cs" />

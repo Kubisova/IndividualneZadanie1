@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AutobazarApp
 {
-    class AutobazarException : Exception
+    class VehicleNotFoundException : Exception
     {
-        public AutobazarException(string message): base(message)
+        public VehicleNotFoundException(string message): base(message)
         {
 
         }
